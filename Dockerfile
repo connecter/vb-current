@@ -1,14 +1,12 @@
 FROM java:openjdk-7-jre
 MAINTAINER Jan Vincent Liwanag <jvliwanag@gmail.com>
 
-ENV JITSI_VIDEOBRIDGE_VER 394
+ADD dist/linux/jitsi-videobridge-linux-x64-build.SVN.zip /jvb.zip
+RUN unzip /jvb.zip && \
+	mv /jitsi-videobridge-linux-x64* /opt/jitsi-videobridge && \
+	rm /jvb.zip
 
 ADD tools/start.sh /start.sh
-
-RUN wget -O /tmp/jvb.zip https://download.jitsi.org/jitsi-videobridge/linux/jitsi-videobridge-linux-x64-$JITSI_VIDEOBRIDGE_VER.zip && \
-  unzip -d /tmp /tmp/jvb.zip && \
-  mv /tmp/jitsi-videobridge-linux-x64-$JITSI_VIDEOBRIDGE_VER /opt/jitsi-videobridge && \
-  rm /tmp/jvb.zip
 
 RUN mkdir -p /root/.sip-communicator && \
   echo 'org.jitsi.impl.neomedia.transform.srtp.SRTPCryptoContext.checkReplay=false' > /root/.sip-communicator/sip-communicator.properties

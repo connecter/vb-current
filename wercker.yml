@@ -2,6 +2,10 @@ box: wercker-labs/docker
 
 build:
   steps:
+    - script:
+        name: build
+        code: |
+          make
 
     - script:
         name: output release version
