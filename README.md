@@ -1,20 +1,7 @@
-Bridge Docker Container
+Jitsi Video Bridge - jvb (java application)
 ====
-Builds and deploys in a docker container on Fleet / CoreOS
 
-## Running it
-```
-/usr/bin/docker run --rm --name videobridge \
-  -e PRIVATE_IP=$COREOS_PRIVATE_IPV4 \
-  -e PUBLIC_IP=$COREOS_PUBLIC_IPV4 \
-  --net host \
-  jvliwanag/videobridge:latest \
-    --domain=connecter.io \
-    --host=172.17.42.1 \
-    --port=8889 \
-    --subdomain=videobridge \
-    --secret=secret
-```
+https://github.com/jitsi/jitsi-videobridge
 
-## To Do
-Need to specify exact media port range (UDP)
+[![wercker status](https://app.wercker.com/status/31768d80f503fdb07b98f692fe18636e/m "wercker status")](https://app.wercker.com/project/bykey/31768d80f503fdb07b98f692fe18636e)
+

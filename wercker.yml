@@ -24,18 +24,6 @@ build:
           docker build -t jvb .
 
     - script:
-        name: save docker image
-        code: |
-          docker save jvb > "$WERCKER_OUTPUT_DIR/docker_image.tar"
-
-deploy:
-  steps:
-    - script:
-        name: load docker image
-        code: |
-          docker load < docker_image.tar
-
-    - script:
         name: tag with release version
         code: |
           docker tag jvb connecter/jvb:$(cat release_tag)
@@ -56,7 +44,7 @@ deploy:
           docker push connecter/jvb:$(cat release_tag)
 
     - script:
-        name: tag remote build version # change to build name env later
+        name: push docker image build version # change to build name env later
         code: |
           docker push connecter/jvb:staging
 
@@ -64,6 +52,18 @@ deploy:
         name: echo docker pull command
         code: |
           echo "docker pull connecter/jvb:$(cat release_tag)"
+
+    - script:
+        name: save docker image
+        code: |
+          docker save jvb > "$WERCKER_OUTPUT_DIR/docker_image.tar"
+
+deploy:
+  steps:
+    - script:
+        name: load docker image
+        code: |
+          docker load < docker_image.tar
 
     - add-to-known_hosts:
         hostname: www.connecter.io
