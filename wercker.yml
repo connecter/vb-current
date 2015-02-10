@@ -53,17 +53,8 @@ build:
         code: |
           echo "docker pull connecter/videobridge:$(cat release_tag)"
 
-    - script:
-        name: save docker image
-        code: |
-          docker save videobridge > "$WERCKER_OUTPUT_DIR/docker_image.tar"
-
 deploy:
   steps:
-    - script:
-        name: load docker image
-        code: |
-          docker load < docker_image.tar
 
     - add-to-known_hosts:
         hostname: $HOSTNAME
@@ -80,5 +71,5 @@ deploy:
 
     - script:
        name: deploy / restart videobridge
-       code: ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no www.connecter.io "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
+       code: ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
 
