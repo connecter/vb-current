@@ -58,7 +58,7 @@ build:
         code: |
           docker save videobridge > "$WERCKER_OUTPUT_DIR/docker_image.tar"
 
-deploy
+deploy:
   steps:
     - script:
         name: load docker image
