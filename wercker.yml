@@ -72,5 +72,5 @@ deploy:
     - script:
        name: deploy / restart videobridge
        code: |
-       # ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
-       ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "docker ps -a"
+         # ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
+         ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "docker ps -a"
