@@ -58,7 +58,7 @@ build:
         code: |
           docker save videobridge > "$WERCKER_OUTPUT_DIR/docker_image.tar"
 
-deploy:
+deploy
   steps:
     - script:
         name: load docker image
@@ -66,18 +66,19 @@ deploy:
           docker load < docker_image.tar
 
     - add-to-known_hosts:
-        hostname: www.connecter.io
+        hostname: $HOSTNAME
 
     - mktemp:
        envvar: PRIVATEKEY_PATH
 
     - create-file:
-       name: write key
+       name: write private key
        filename: $PRIVATEKEY_PATH
-       content: $FLEET_DEPLOY_KEY_PRIVATE
+       content: $KEY_PRIVATE
        overwrite: true
        hide-from-log: true
 
     - script:
-       name: restart videobridge
+       name: deploy / restart videobridge
        code: ssh -i $PRIVATEKEY_PATH -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no www.connecter.io "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
+
