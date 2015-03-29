@@ -8,8 +8,8 @@ VB_PROPERTIES=/root/.sip-communicator/sip-communicator.properties
 while [ "$#" -ne 0 ]; do
     ARG=$1
     shift
-    if [[ "$ARG" =~ ^-x-.*= ]]; then
-      PROPS="$PROPS\n${ARG:3}"
+    if [[ "$ARG" =~ ^--x-.*= ]]; then
+      PROPS="$PROPS\n${ARG:4}"
     else
       ARGS="$ARGS $ARG"
     fi
