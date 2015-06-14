@@ -1,12 +1,24 @@
 #!/bin/bash
 
-PROPERTIES_PATH=/root/.sip-communicator/sip-communicator.properties
+ARGS=
+PROPS=
 
-if [ "x$PRIVATE_IP" != "x" ] && [ "x$PUBLIC_IP" != "x" ]; then
-	echo "org.jitsi.videobridge.NAT_HARVESTER_PRIVATE_ADDRESS=$PRIVATE_IP" >> "$PROPERTIES_PATH"
-	echo "org.jitsi.videobridge.NAT_HARVESTER_PUBLIC_ADDRESS=$PUBLIC_IP" >> "$PROPERTIES_PATH"
+VB_PROPERTIES=/root/.sip-communicator/sip-communicator.properties
 
-	echo "NAT set. Local: $PRIVATE_IP, Public: $PUBLIC_IP"	
+while [ "$#" -ne 0 ]; do
+    ARG=$1
+    shift
+    if [[ "$ARG" =~ ^--x-.*= ]]; then
+      PROPS="$PROPS\n${ARG:4}"
+    else
+      ARGS="$ARGS $ARG"
+    fi
+done
+
+if [ ! -z "$PROPS" ]; then
+  echo -e "Setting videobridge properties:$PROPS"
+  mkdir -p $(dirname "$VB_PROPERTIES")
+  echo -e  "$PROPS" > "$VB_PROPERTIES"
 fi
 
-exec /opt/jitsi-videobridge/jvb.sh $* 
+exec /opt/jitsi-videobridge/jvb.sh $ARGS

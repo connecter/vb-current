@@ -8,7 +8,4 @@ RUN unzip /jvb.zip && \
 
 ADD tools/start.sh /start.sh
 
-RUN mkdir -p /root/.sip-communicator && \
-  echo 'org.jitsi.impl.neomedia.transform.srtp.SRTPCryptoContext.checkReplay=false' > /root/.sip-communicator/sip-communicator.properties
-
 ENTRYPOINT ["/start.sh"]
