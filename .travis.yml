@@ -1,1 +1,10 @@
+sudo: required
+
+services:
+  - docker
+
 language: java
+
+before_install:
+- make
+- docker build -t videobridge .
