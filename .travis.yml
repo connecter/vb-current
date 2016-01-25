@@ -11,3 +11,8 @@ jdk:
 script:
 - make
 - docker build -t videobridge .
+
+after_success:
+- docker tag videobridge connecter/videobridge:travis
+- docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+- docker push connecter/videobridge:travis
