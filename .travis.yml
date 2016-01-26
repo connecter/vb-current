@@ -1,13 +1,20 @@
 sudo: required
 
 services:
-  - docker
+- docker
 
 language: java
 
 jdk:
-  - openjdk7
+- openjdk7
 
+env:
+- HOSTNAME = www.connecter.io
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_9ab4de2c9edb_key -iv $encrypted_9ab4de2c9edb_iv
+  -in connecter-docker.pem.enc -out connecter-docker.pem -d
+  
 script:
 - make
 - docker build -t videobridge .
@@ -16,3 +23,7 @@ after_success:
 - docker tag videobridge connecter/videobridge:travis
 - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 - docker push connecter/videobridge:travis
+
+after_success:
+- ssh -i connecter-docker.pem -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "fleetctl stop videobridge@1.service && fleetctl start videobridge@1.service"
+- ssh -i connecter-docker.pem -l core -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $HOSTNAME "docker ps -a"
