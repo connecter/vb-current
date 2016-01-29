@@ -11,7 +11,7 @@ jdk:
 env:
 
 before_install:
-- sudo apt-get --only-upgrade install maven
+- sudo apt-get --only-upgrade install maven3
   
 script:
 - mkdir -p dist
