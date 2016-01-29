@@ -11,8 +11,7 @@ jdk:
 env:
 
 before_install:
-- mvn -version
-- which mvn
+- sudo apt-get --only-upgrade install maven
   
 script:
 - mkdir -p dist
