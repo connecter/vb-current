@@ -9,12 +9,8 @@ jdk:
 - openjdk7
 
 env:
-- HOSTNAME = www.connecter.io
 
 before_install:
-- openssl aes-256-cbc -K $encrypted_9ab4de2c9edb_key -iv $encrypted_9ab4de2c9edb_iv
-  -in connecter-docker.pem.enc -out connecter-docker.pem -d
-- chmod 600 connecter-docker.pem
   
 script:
 - make
