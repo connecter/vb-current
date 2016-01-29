@@ -12,12 +12,14 @@ env:
 
 before_install:
 - mvn -version
+- which mvn
   
 script:
 - mkdir -p dist
-- cd base && \
-  mvn dependency:get -DartifactId=maven-ant-tasks -DgroupId=org.apache.maven -Dversion=2.1.3
-- ant -lib ~/.m2/repository/org/apache/maven/maven-ant-tasks/2.1.3 ../dist
+- cd base && mvn dependency:get -DartifactId=maven-ant-tasks -DgroupId=org.apache.maven -Dversion=2.1.3
+- ant -lib ~/.m2/repository/org/apache/maven/maven-ant-tasks/2.1.3 dist.lin64
+- cp dist/linux/*.zip ../dist
+- cd ..
 - ls -l dist
 - docker build -t videobridge .
 
